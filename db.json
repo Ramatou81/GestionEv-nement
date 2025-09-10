@@ -1,0 +1,7 @@
+
+{
+  "events": [
+    { "id": 1, "title": "Événement A", "date": "2025-05-23", "description": "Description A" },
+    { "id": 2, "title": "Événement B", "date": "2025-06-15", "description": "Description B" }
+  ]
+}
