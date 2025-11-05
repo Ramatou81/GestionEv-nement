@@ -19,7 +19,6 @@ export default function EventEdit() {
       setDate(eventToEdit.date)
       setDescription(eventToEdit.description)
     } else {
-      // Si pas trouvé, rediriger ou afficher erreur
       navigate('/dashboard')
     }
   }, [id, navigate])
@@ -36,12 +35,7 @@ export default function EventEdit() {
     const localEvents = JSON.parse(localStorage.getItem('events')) || []
     const updatedEvents = localEvents.map(event => {
       if (event.id === id) {
-        return {
-          ...event,
-          title: title.trim(),
-          date: date.trim(),
-          description: description.trim(),
-        }
+        return { ...event, title, date, description }
       }
       return event
     })
@@ -51,48 +45,67 @@ export default function EventEdit() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6 border rounded-lg shadow mt-10 bg-white">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-        Modifier l’événement
-      </h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        
+        <h1 className="text-3xl font-bold text-gray-900 text-center mb-6">
+          Modifier l’événement
+        </h1>
 
-      {error && (
-        <div className="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded">
-          {error}
-        </div>
-      )}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 mb-4 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="Titre de l’événement"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          required
-          className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        <input
-          type="date"
-          value={date}
-          onChange={e => setDate(e.target.value)}
-          required
-          className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-          rows={4}
-          required
-          className="border border-gray-300 p-2 rounded resize-none focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition"
-        >
-          Enregistrer les modifications
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="space-y-5">
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Titre
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              className="w-full border border-gray-300 bg-gray-50 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              placeholder="Nom de l’événement"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Date
+            </label>
+            <input
+              type="date"
+              value={date}
+              onChange={e => setDate(e.target.value)}
+              className="w-full border border-gray-300 bg-gray-50 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Description
+            </label>
+            <textarea
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              rows={4}
+              className="w-full border border-gray-300 bg-gray-50 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
+              placeholder="Décris brièvement votre événement..."
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition shadow-sm"
+          >
+            Enregistrer les modifications
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
